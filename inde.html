@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>撮影前ヒヤリングシート｜Instagram動画撮影</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+      background: #f7f5f2;
+      color: #333;
+      padding: 40px 20px;
+    }
+
+    .container { max-width: 800px; margin: 0 auto; }
+
+    header {
+      background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+      color: #fff;
+      padding: 32px 40px;
+      border-radius: 12px 12px 0 0;
+    }
+    header .label {
+      font-size: 11px; letter-spacing: 3px;
+      color: rgba(255,255,255,0.75); text-transform: uppercase; margin-bottom: 8px;
+    }
+    header h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
+    header p  { font-size: 13px; color: rgba(255,255,255,0.85); }
+
+    .meta-bar {
+      background: #1a1a1a; color: #ccc;
+      padding: 16px 40px; display: flex; gap: 40px; flex-wrap: wrap;
+    }
+    .meta-item label {
+      font-size: 10px; letter-spacing: 2px; display: block; color: #888; margin-bottom: 4px;
+    }
+    .meta-item input {
+      background: transparent; border: none;
+      border-bottom: 1px solid #444; color: #fff;
+      font-size: 13px; width: 200px; padding: 2px 4px; outline: none;
+    }
+
+    .main {
+      background: #fff; padding: 40px;
+      border-radius: 0 0 12px 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .section { margin-bottom: 40px; }
+    .section-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 20px; padding-bottom: 10px;
+      border-bottom: 2px solid #1a1a1a;
+    }
+    .section-num {
+      background: linear-gradient(135deg, #833ab4, #fd1d1d);
+      color: #fff; width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; flex-shrink: 0;
+    }
+    .section-title { font-size: 16px; font-weight: 700; color: #1a1a1a; }
+
+    .question { margin-bottom: 20px; }
+    .question label {
+      display: block; font-size: 13px; font-weight: 600;
+      color: #555; margin-bottom: 6px;
+    }
+    .question .hint { font-size: 11px; color: #999; font-weight: 400; margin-left: 6px; }
+
+    .question input[type="text"],
+    .question textarea {
+      width: 100%; padding: 10px 14px;
+      border: 1.5px solid #ddd; border-radius: 6px;
+      font-size: 14px; font-family: inherit; color: #333;
+      background: #fafafa; transition: border 0.2s;
+      outline: none; resize: vertical;
+    }
+    .question input[type="text"]:focus,
+    .question textarea:focus { border-color: #833ab4; background: #fff; }
+    .question textarea { min-height: 80px; }
+
+    .check-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px;
+    }
+    .check-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 12px; border: 1.5px solid #ddd; border-radius: 6px;
+      cursor: pointer; transition: all 0.2s; font-size: 13px;
+    }
+    .check-item:hover { border-color: #833ab4; background: #f9f4ff; }
+    .check-item input[type="checkbox"],
+    .check-item input[type="radio"] { accent-color: #833ab4; }
+
+    .genre-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    }
+    .genre-card {
+      border: 2px solid #ddd; border-radius: 8px;
+      padding: 14px; cursor: pointer; text-align: center; transition: all 0.2s;
+    }
+    .genre-card:hover { border-color: #833ab4; background: #f9f4ff; }
+    .genre-card input[type="radio"] { display: none; }
+    .genre-card:has(input:checked) { border-color: #833ab4; background: #f3e8ff; }
+    .genre-emoji { font-size: 24px; display: block; margin-bottom: 6px; }
+    .genre-label { font-size: 13px; font-weight: 600; }
+
+    .content-item {
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 10px; align-items: flex-start; margin-bottom: 12px;
+    }
+    .content-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #f0e6ff; color: #833ab4;
+      font-size: 13px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 10px;
+    }
+    .content-fields { display: flex; flex-direction: column; gap: 6px; }
+    .content-tag-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .content-tag {
+      padding: 4px 10px; border: 1.5px solid #ddd; border-radius: 20px;
+      font-size: 11px; cursor: pointer; transition: all 0.15s;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .content-tag input { display: none; }
+    .content-tag:has(input:checked) { background: #833ab4; border-color: #833ab4; color: #fff; }
+
+    .ng-list {
+      background: #fff5f5; border: 1.5px solid #fca5a5; border-radius: 8px; padding: 16px 20px;
+    }
+    .ng-items {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 8px; margin-bottom: 12px;
+    }
+    .ng-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; cursor: pointer; padding: 6px 10px;
+      border-radius: 6px; transition: background 0.15s;
+    }
+    .ng-item:hover { background: #fee2e2; }
+    .ng-item input { accent-color: #dc2626; }
+
+    .flow-steps { display: flex; flex-direction: column; }
+    .flow-step {
+      display: grid; grid-template-columns: auto 1fr;
+      gap: 16px; position: relative;
+    }
+    .flow-step:not(:last-child)::before {
+      content: ''; position: absolute;
+      left: 16px; top: 36px; bottom: -8px;
+      width: 2px; background: #e5e7eb;
+    }
+    .flow-left {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 4px; padding-top: 4px;
+    }
+    .flow-icon {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, #833ab4, #fd1d1d);
+      color: #fff; font-size: 14px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; z-index: 1;
+    }
+    .flow-time { font-size: 10px; color: #999; white-space: nowrap; }
+    .flow-right { padding: 4px 0 24px; }
+    .flow-title { font-size: 14px; font-weight: 700; color: #1a1a1a; margin-bottom: 4px; }
+    .flow-desc { font-size: 12px; color: #666; line-height: 1.6; }
+
+    .total-time-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg, #833ab4, #fd1d1d);
+      color: #fff; padding: 6px 16px; border-radius: 20px;
+      font-size: 13px; font-weight: 700; margin-top: 8px;
+    }
+
+    .insta-input-wrap { position: relative; }
+    .insta-prefix {
+      position: absolute; left: 14px; top: 50%;
+      transform: translateY(-50%); color: #888; font-size: 14px; pointer-events: none;
+    }
+    .insta-input-wrap input { padding-left: 28px !important; }
+
+    /* 送信ボタンエリア */
+    .submit-area {
+      margin-top: 40px; padding-top: 32px;
+      border-top: 2px solid #f0f0f0; text-align: center;
+    }
+    .submit-area p { font-size: 13px; color: #888; margin-bottom: 16px; }
+
+    .btn-submit {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 16px 48px;
+      background: linear-gradient(135deg, #833ab4, #fd1d1d);
+      color: #fff; border: none; border-radius: 50px;
+      font-size: 16px; font-weight: 700; cursor: pointer;
+      transition: all 0.2s; box-shadow: 0 4px 20px rgba(131,58,180,0.35);
+    }
+    .btn-submit:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .btn-print {
+      display: inline-flex; align-items: center; gap: 6px;
+      margin-top: 12px; padding: 10px 24px;
+      background: #fff; border: 2px solid #ddd; border-radius: 50px;
+      font-size: 13px; color: #666; cursor: pointer; transition: all 0.2s;
+    }
+    .btn-print:hover { border-color: #999; color: #333; }
+
+    /* 送信成功オーバーレイ */
+    .overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6); z-index: 100;
+      align-items: center; justify-content: center;
+    }
+    .overlay.show { display: flex; }
+    .overlay-box {
+      background: #fff; border-radius: 16px; padding: 48px 40px;
+      text-align: center; max-width: 420px; width: 90%;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .overlay-icon { font-size: 56px; margin-bottom: 16px; }
+    .overlay-title { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+    .overlay-desc { font-size: 14px; color: #666; line-height: 1.6; margin-bottom: 24px; }
+    .overlay-btn {
+      padding: 12px 32px; background: #1a1a1a; color: #fff;
+      border: none; border-radius: 50px; font-size: 14px;
+      font-weight: 600; cursor: pointer;
+    }
+
+    /* エラー表示 */
+    .error-msg {
+      display: none; margin-top: 12px;
+      padding: 12px 16px; background: #fff5f5;
+      border: 1.5px solid #fca5a5; border-radius: 8px;
+      font-size: 13px; color: #dc2626;
+    }
+
+    @media print {
+      body { background: #fff; padding: 0; }
+      .container { max-width: 100%; }
+      header { border-radius: 0; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .main { box-shadow: none; border-radius: 0; }
+      .submit-area { display: none; }
+      .overlay { display: none !important; }
+    }
+    @media (max-width: 600px) {
+      header, .main, .meta-bar { padding: 24px 20px; }
+      .genre-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- 送信成功オーバーレイ -->
+<div class="overlay" id="success-overlay">
+  <div class="overlay-box">
+    <div class="overlay-icon">🎉</div>
+    <div class="overlay-title">送信完了しました！</div>
+    <div class="overlay-desc">
+      ヒヤリング内容を受け付けました。<br>
+      撮影当日にお会いしましょう！<br><br>
+      <strong>@万松寺マン</strong> よりご連絡いたします。
+    </div>
+    <button class="overlay-btn" onclick="document.getElementById('success-overlay').classList.remove('show')">閉じる</button>
+  </div>
+</div>
+
+<div class="container">
+  <header>
+    <div class="label">Pre-Shooting Interview · Instagram Video</div>
+    <h1>撮影前ヒヤリングシート</h1>
+    <p>Instagram動画撮影｜観光客向け店舗紹介コンテンツ制作</p>
+  </header>
+
+  <div class="meta-bar">
+    <div class="meta-item">
+      <label>ヒヤリング日</label>
+      <input type="text" id="today-date" name="today_date" readonly>
+    </div>
+    <div class="meta-item">
+      <label>店舗名</label>
+      <input type="text" name="store_name_meta" placeholder="店舗名を入力">
+    </div>
+  </div>
+
+  <div class="main">
+    <form id="hearing-form">
+
+      <!-- 1. 基本情報 -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-num">1</div>
+          <div class="section-title">店舗の基本情報</div>
+        </div>
+
+        <div class="question">
+          <label>店舗名（正式名称）</label>
+          <input type="text" name="store_name" placeholder="例：ラーメン〇〇 浅草店">
+        </div>
+
+        <div class="question">
+          <label>ジャンル <span class="hint">（当てはまるものを選択）</span></label>
+          <div class="genre-grid">
+            <label class="genre-card">
+              <input type="radio" name="genre" value="飲食">
+              <span class="genre-emoji">🍜</span>
+              <span class="genre-label">飲食</span>
+            </label>
+            <label class="genre-card">
+              <input type="radio" name="genre" value="物販">
+              <span class="genre-emoji">🛍️</span>
+              <span class="genre-label">物販</span>
+            </label>
+            <label class="genre-card">
+              <input type="radio" name="genre" value="サービス">
+              <span class="genre-emoji">✨</span>
+              <span class="genre-label">サービス</span>
+            </label>
+            <label class="genre-card">
+              <input type="radio" name="genre" value="その他">
+              <span class="genre-emoji">📍</span>
+              <span class="genre-label">その他</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="question">
+          <label>Instagram アカウント <span class="hint">（あれば）</span></label>
+          <div class="insta-input-wrap">
+            <span class="insta-prefix">@</span>
+            <input type="text" name="instagram" placeholder="instagram_account">
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. 差別化・強み -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-num">2</div>
+          <div class="section-title">他店との差別化・強み</div>
+        </div>
+
+        <div class="question">
+          <label>観光客に「ここじゃないとダメ」と思わせる一番の理由は？</label>
+          <textarea name="appeal" placeholder="例：職人が目の前で作る本格手打ち蕎麦。外国語メニューあり。外国人スタッフ在籍で英語対応OK。"></textarea>
+        </div>
+
+        <div class="question">
+          <label>SNSや口コミでよく言われること・写真を撮りたくなる理由</label>
+          <textarea name="sns_feedback" placeholder="例：「盛り付けがフォトジェニック」「量が多くて驚いた」「店内が映える」"></textarea>
+        </div>
+
+        <div class="question">
+          <label>観光客に伝えたいキャッチコピー <span class="hint">（広告・HPで使いたい一言）</span></label>
+          <input type="text" name="catchcopy" placeholder="例：「一度食べたら忘れられない、本物のラーメンがここにある。」">
+        </div>
+      </div>
+
+      <!-- 3. 動画コンテンツ -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-num">3</div>
+          <div class="section-title">Instagram動画に入れたいコンテンツ</div>
+        </div>
+
+        <div class="question">
+          <label>🎵 店内BGMのジャンル <span class="hint">（動画の雰囲気に合わせて使用）</span></label>
+          <input type="text" name="bgm" placeholder="例：ジャズ / ポップス / 和風 / 流行りのJ-POP など">
+        </div>
+
+        <div class="question">
+          <label>🎁 お得情報・クーポン・特典 <span class="hint">（動画で告知したいもの）</span></label>
+          <div class="check-grid" style="margin-bottom:10px;">
+            <label class="check-item"><input type="checkbox" name="deals" value="クーポン（割引券）あり"> クーポン（割引券）あり</label>
+            <label class="check-item"><input type="checkbox" name="deals" value="期間限定セール"> 期間限定セール</label>
+            <label class="check-item"><input type="checkbox" name="deals" value="インスタフォローで特典"> インスタフォローで特典</label>
+            <label class="check-item"><input type="checkbox" name="deals" value="観光客向け割引"> 観光客向け割引</label>
+            <label class="check-item"><input type="checkbox" name="deals" value="セット・食べ放題"> セット・食べ放題</label>
+            <label class="check-item"><input type="checkbox" name="deals" value="外国語対応メニュー"> 外国語対応メニュー</label>
+          </div>
+          <textarea name="deals_detail" placeholder="詳細を記入：例「インスタフォローしてスタッフに見せると、ドリンク1杯サービス」"></textarea>
+        </div>
+
+        <div class="question">
+          <label>📲 動画で紹介したいコンテンツ <span class="hint">（3〜5個以上）</span></label>
+
+          <div class="content-item">
+            <div class="content-num">1</div>
+            <div class="content-fields">
+              <input type="text" name="content_1" placeholder="例：大盛りチャレンジメニュー「鬼盛りラーメン」（見た目インパクト大）">
+              <div class="content-tag-row">
+                <label class="content-tag"><input type="radio" name="c1" value="料理・商品"> 🍽 料理・商品</label>
+                <label class="content-tag"><input type="radio" name="c1" value="サービス"> ✨ サービス</label>
+                <label class="content-tag"><input type="radio" name="c1" value="お得情報"> 🎁 お得情報</label>
+                <label class="content-tag"><input type="radio" name="c1" value="シーン・雰囲気"> 🎬 シーン・雰囲気</label>
+                <label class="content-tag"><input type="radio" name="c1" value="メッセージ"> 💬 メッセージ</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-item">
+            <div class="content-num">2</div>
+            <div class="content-fields">
+              <input type="text" name="content_2" placeholder="例：クーポン告知「インスタフォローでドリンク無料！」">
+              <div class="content-tag-row">
+                <label class="content-tag"><input type="radio" name="c2" value="料理・商品"> 🍽 料理・商品</label>
+                <label class="content-tag"><input type="radio" name="c2" value="サービス"> ✨ サービス</label>
+                <label class="content-tag"><input type="radio" name="c2" value="お得情報"> 🎁 お得情報</label>
+                <label class="content-tag"><input type="radio" name="c2" value="シーン・雰囲気"> 🎬 シーン・雰囲気</label>
+                <label class="content-tag"><input type="radio" name="c2" value="メッセージ"> 💬 メッセージ</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-item">
+            <div class="content-num">3</div>
+            <div class="content-fields">
+              <input type="text" name="content_3" placeholder="例：オーナーから観光客へのメッセージカット">
+              <div class="content-tag-row">
+                <label class="content-tag"><input type="radio" name="c3" value="料理・商品"> 🍽 料理・商品</label>
+                <label class="content-tag"><input type="radio" name="c3" value="サービス"> ✨ サービス</label>
+                <label class="content-tag"><input type="radio" name="c3" value="お得情報"> 🎁 お得情報</label>
+                <label class="content-tag"><input type="radio" name="c3" value="シーン・雰囲気"> 🎬 シーン・雰囲気</label>
+                <label class="content-tag"><input type="radio" name="c3" value="メッセージ"> 💬 メッセージ</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-item">
+            <div class="content-num">4</div>
+            <div class="content-fields">
+              <input type="text" name="content_4" placeholder="例：調理シーン（麺を投入するアツいシーン）">
+              <div class="content-tag-row">
+                <label class="content-tag"><input type="radio" name="c4" value="料理・商品"> 🍽 料理・商品</label>
+                <label class="content-tag"><input type="radio" name="c4" value="サービス"> ✨ サービス</label>
+                <label class="content-tag"><input type="radio" name="c4" value="お得情報"> 🎁 お得情報</label>
+                <label class="content-tag"><input type="radio" name="c4" value="シーン・雰囲気"> 🎬 シーン・雰囲気</label>
+                <label class="content-tag"><input type="radio" name="c4" value="メッセージ"> 💬 メッセージ</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-item">
+            <div class="content-num">5</div>
+            <div class="content-fields">
+              <input type="text" name="content_5" placeholder="例：外観・看板のカット（場所わかりやすく）">
+              <div class="content-tag-row">
+                <label class="content-tag"><input type="radio" name="c5" value="料理・商品"> 🍽 料理・商品</label>
+                <label class="content-tag"><input type="radio" name="c5" value="サービス"> ✨ サービス</label>
+                <label class="content-tag"><input type="radio" name="c5" value="お得情報"> 🎁 お得情報</label>
+                <label class="content-tag"><input type="radio" name="c5" value="シーン・雰囲気"> 🎬 シーン・雰囲気</label>
+                <label class="content-tag"><input type="radio" name="c5" value="メッセージ"> 💬 メッセージ</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="content-item">
+            <div class="content-num">+</div>
+            <div class="content-fields">
+              <textarea name="content_extra" placeholder="その他、追加で入れたいコンテンツがあれば自由に記入してください"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. 撮影NG確認 -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-num">4</div>
+          <div class="section-title">撮影NG・映してはいけないもの</div>
+        </div>
+        <div class="ng-list">
+          <p style="font-size:12px;color:#dc2626;font-weight:700;margin-bottom:12px;">⚠️ 以下の中で、映してはいけないものにチェックしてください</p>
+          <div class="ng-items">
+            <label class="ng-item"><input type="checkbox" name="ng" value="バックヤード・厨房内部"> バックヤード・厨房内部</label>
+            <label class="ng-item"><input type="checkbox" name="ng" value="レジ・金銭取扱い周辺"> レジ・金銭取扱い周辺</label>
+            <label class="ng-item"><input type="checkbox" name="ng" value="スタッフの顔（全員）"> スタッフの顔（全員）</label>
+            <label class="ng-item"><input type="checkbox" name="ng" value="特定のスタッフの顔"> 特定のスタッフの顔</label>
+            <label class="ng-item"><input type="checkbox" name="ng" value="来店中のお客様の顔"> 来店中のお客様の顔</label>
+            <label class="ng-item"><input type="checkbox" name="ng" value="個室・プライベートルーム"> 個室・プライベートルーム</label>
+            <label class="ng-item"><input type="checkbox" name="ng" value="価格表・料金ボード"> 価格表・料金ボード</label>
+            <label class="ng-item"><input type="checkbox" name="ng" value="他社・競合店の名称・看板"> 他社・競合店の名称・看板</label>
+            <label class="ng-item"><input type="checkbox" name="ng" value="著作権のある装飾・アート"> 著作権のある装飾・アート</label>
+            <label class="ng-item"><input type="checkbox" name="ng" value="薬機法に触れる表示"> 薬機法に触れる表示</label>
+            <label class="ng-item"><input type="checkbox" name="ng" value="宗教・政治に関わるもの"> 宗教・政治に関わるもの</label>
+            <label class="ng-item"><input type="checkbox" name="ng" value="未発表の商品・メニュー"> 未発表の商品・メニュー</label>
+          </div>
+          <div class="question" style="margin-bottom:0;">
+            <label>上記以外でNGのものがあれば記入してください</label>
+            <textarea name="ng_other" style="min-height:60px;" placeholder="例：〇〇棚の在庫数が見える部分は映さないでほしい　など"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. 当日の流れ -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-num">5</div>
+          <div class="section-title">当日の撮影フロー</div>
+        </div>
+        <div class="flow-steps">
+          <div class="flow-step">
+            <div class="flow-left">
+              <div class="flow-icon">📋</div>
+              <div class="flow-time">〜5分</div>
+            </div>
+            <div class="flow-right">
+              <div class="flow-title">① ヒヤリングシートをもとに最終確認</div>
+              <div class="flow-desc">このシートの内容をもとに撮影方針を5分程度すり合わせます。当日の変更点や追加要望もここで確認します。</div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-left">
+              <div class="flow-icon">🗺️</div>
+              <div class="flow-time">〜10分</div>
+            </div>
+            <div class="flow-right">
+              <div class="flow-title">② 店内の場所選定・NGエリアの確認</div>
+              <div class="flow-desc">店内を一緒に歩いて撮影ポイントを選定します。映してはいけない場所・もの（上記④で確認済）を現地で再確認します。</div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-left">
+              <div class="flow-icon">🎬</div>
+              <div class="flow-time">〜20分</div>
+            </div>
+            <div class="flow-right">
+              <div class="flow-title">③ 撮影（立ち会いをお願いします）</div>
+              <div class="flow-desc">決定したコンテンツ・場所をもとに撮影を行います。必要に応じてスタッフ様・オーナー様にご協力いただく場合があります。</div>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="flow-left">
+              <div class="flow-icon">✅</div>
+              <div class="flow-time">〜5分</div>
+            </div>
+            <div class="flow-right">
+              <div class="flow-title">④ 撮影内容の確認・終了</div>
+              <div class="flow-desc">撮影した映像を <strong>@万松寺マン</strong> のアカウントにてその場でご確認いただきます。問題なければ撮影終了となります。</div>
+            </div>
+          </div>
+        </div>
+        <div class="total-time-badge">🕐 合計所要時間：約 30〜40 分</div>
+
+        <div class="question" style="margin-top:20px;">
+          <label>当日立ち会いいただける方のお名前・役職</label>
+          <input type="text" name="attendee" placeholder="例：オーナー 田中様、スタッフ 佐藤様">
+        </div>
+      </div>
+
+      <!-- 6. その他 -->
+      <div class="section">
+        <div class="section-header">
+          <div class="section-num">6</div>
+          <div class="section-title">その他・ご要望</div>
+        </div>
+        <div class="question">
+          <label>観光客に一番伝えたいメッセージ <span class="hint">（動画の最後に入れるひと言）</span></label>
+          <input type="text" name="final_message" placeholder="例：「ぜひ浅草に来たらここに寄ってみてください！待ってます！」">
+        </div>
+        <div class="question">
+          <label>その他ご要望・当日の特記事項</label>
+          <textarea name="other_requests" style="min-height:100px;" placeholder="何でも記入してください。例：〇〇時以降はお客様が多いので早めに撮りたい　など"></textarea>
+        </div>
+      </div>
+
+      <!-- 送信ボタン -->
+      <div class="submit-area">
+        <p>入力内容を確認のうえ送信してください。送信後、スプレッドシートに自動で記録されます。</p>
+        <button type="submit" class="btn-submit" id="submit-btn">
+          <span>📩</span> この内容で送信する
+        </button>
+        <br>
+        <button type="button" class="btn-print" onclick="window.print()">🖨 印刷する</button>
+        <div class="error-msg" id="error-msg">
+          ⚠️ 送信に失敗しました。時間をおいて再度お試しください。
+        </div>
+      </div>
+
+    </form>
+  </div>
+</div>
+
+<script>
+  // 今日の日付を自動入力
+  const d = new Date();
+  document.getElementById('today-date').value =
+    d.getFullYear() + ' / ' + String(d.getMonth()+1).padStart(2,'0') + ' / ' + String(d.getDate()).padStart(2,'0');
+
+  // ▼▼▼ Google Apps Script の URL をここに貼り付ける ▼▼▼
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbztNoFg6Tmec99LchNFwkahsL436-VjzKGLQ4sMzxwrN2rkuU1lESxYyjFoQvJji84YPQ/exec';
+  // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
+
+  document.getElementById('hearing-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    const btn = document.getElementById('submit-btn');
+    const errMsg = document.getElementById('error-msg');
+    btn.disabled = true;
+    btn.innerHTML = '<span>⏳</span> 送信中...';
+    errMsg.style.display = 'none';
+
+    // フォームデータを収集（チェックボックスは複数選択をカンマ結合）
+    const form = e.target;
+    const raw = new FormData(form);
+    const grouped = {};
+    for (const [key, val] of raw.entries()) {
+      if (grouped[key]) {
+        grouped[key] += '、' + val;
+      } else {
+        grouped[key] = val;
+      }
+    }
+    // メタバーの日付・店舗名も含める
+    grouped['today_date'] = document.getElementById('today-date').value;
+    grouped['store_name_meta'] = document.querySelector('[name="store_name_meta"]').value;
+
+    try {
+      await fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(grouped)
+      });
+      // no-cors のため成功判定はできないが、エラーなければ成功とみなす
+      document.getElementById('success-overlay').classList.add('show');
+      form.reset();
+      document.getElementById('today-date').value =
+        d.getFullYear() + ' / ' + String(d.getMonth()+1).padStart(2,'0') + ' / ' + String(d.getDate()).padStart(2,'0');
+    } catch (err) {
+      errMsg.style.display = 'block';
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<span>📩</span> この内容で送信する';
+    }
+  });
+</script>
+</body>
+</html>
